@@ -1,38 +1,33 @@
 package main
 
-import (
-	"fmt"
-	"math"
-	"strconv"
-)
+import "fmt"
 
 func main() {
-	pi := math.Pi
-	phi := math.Phi
+	const myname string = "Tibamwenda Anthony"
+	fmt.Println(myname)
 
-	fmt.Println("The value of Pi is:", pi)
-	fmt.Println("The value of Phi is:", phi)
+	// With multiple constants
+	const (
+		place_of_birth = "Rubaga"
+		founded = 2008
+		founder = "Karamagi Nelson"
+	)
 
-	// Integer to float
-	distanceInt := 42
-	var distanceFloat float64 = float64(distanceInt)
-	fmt.Printf("Integer to float: %.3f\n", distanceFloat)
-
-	// Checking the type of a variable
-	fmt.Printf("%T\n", phi)
-
-	// Convert a variable to a string
-	str := fmt.Sprint(phi)
-	fmt.Println("The string value of Phi is:", str)
-	fmt.Printf("%T\n", str)
-
-	// int to string
-	str1 := strconv.Itoa(25)
-	fmt.Println(str1)
-	fmt.Printf("%T\n", str1)
-
-	// sting to in
-	str2 := "49"
-	var intFromStr, _ = strconv.Atoi(str2)
-	fmt.Println("String to integer:", intFromStr)
+	fmt.Println("Founder:", founder)
+	
+	const (
+		_ = iota
+		Currency
+		Language
+		Country
+		City
+		President
+	)
+	fmt.Println("Currency", Currency)
+	fmt.Println("Language", Language)
+	fmt.Println("Country", Country)
+	fmt.Println("City", City)
+	fmt.Println("President", President)
 }
+
+
