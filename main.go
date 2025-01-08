@@ -1,41 +1,27 @@
 package main
 
-import "fmt"
-
-func sayHello (s string){
-	s = "Taa Abwooli"
-}
-
-func sayHelloPointer(s *string){
-
-	// Declaring a variable named myStrPointer and it's type is a pointer to a string
-	*s = "Taa Abwooli"
-}
+import (
+	"fmt"
+	"strconv"
+)
 
 func main() {
-	fmt.Println("What is your favourite programming language?")
-	var lang string
-	fmt.Scanln(&lang)
-	fmt.Printf("Setup %v in your code editor \n", lang)
+	fmt.Println("What is your current speed?")
+	var speed string
+	fmt.Scanln(&speed)
+	fmt.Println("Your speed is:", speed, "Km/hr")
+	fmt.Printf("%T\n", speed)
+	var speedInt, _ = strconv.Atoi(speed)
+	fmt.Printf("%T\n", speedInt)
 
-	greeting := "Taa Akiiki"
-	sayHello(greeting)
-	fmt.Println("After calling sayHello", greeting)
-
-	sayHelloPointer(&greeting)
-	fmt.Println("After calling sayHelloPointer:", greeting)
-
-	// Zero valure of a pointer
-	var strPtr *string
-	var intPtr *int
-	var floatPtr *float64
-	var boolPtr *bool 
-
-	fmt.Println(strPtr)
-	fmt.Println(intPtr)
-	fmt.Println(floatPtr)
-	fmt.Println(boolPtr)
-
+	if (speedInt>=130) {
+		fmt.Println("Slow down, you're driving too fast!!!")
+	}else if (speedInt>=45) {
+		fmt.Println("Welcome to Fort Potal, drive safe.")
+	}else{
+		fmt.Println("Your speed is dangerously on this highway,speed up")
+	}
+	
 }
 
 
