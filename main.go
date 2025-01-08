@@ -2,32 +2,40 @@ package main
 
 import "fmt"
 
+func sayHello (s string){
+	s = "Taa Abwooli"
+}
+
+func sayHelloPointer(s *string){
+
+	// Declaring a variable named myStrPointer and it's type is a pointer to a string
+	*s = "Taa Abwooli"
+}
+
 func main() {
-	const myname string = "Tibamwenda Anthony"
-	fmt.Println(myname)
+	fmt.Println("What is your favourite programming language?")
+	var lang string
+	fmt.Scanln(&lang)
+	fmt.Printf("Setup %v in your code editor \n", lang)
 
-	// With multiple constants
-	const (
-		place_of_birth = "Rubaga"
-		founded = 2008
-		founder = "Karamagi Nelson"
-	)
+	greeting := "Taa Akiiki"
+	sayHello(greeting)
+	fmt.Println("After calling sayHello", greeting)
 
-	fmt.Println("Founder:", founder)
-	
-	const (
-		_ = iota
-		Currency
-		Language
-		Country
-		City
-		President
-	)
-	fmt.Println("Currency", Currency)
-	fmt.Println("Language", Language)
-	fmt.Println("Country", Country)
-	fmt.Println("City", City)
-	fmt.Println("President", President)
+	sayHelloPointer(&greeting)
+	fmt.Println("After calling sayHelloPointer:", greeting)
+
+	// Zero valure of a pointer
+	var strPtr *string
+	var intPtr *int
+	var floatPtr *float64
+	var boolPtr *bool 
+
+	fmt.Println(strPtr)
+	fmt.Println(intPtr)
+	fmt.Println(floatPtr)
+	fmt.Println(boolPtr)
+
 }
 
 
