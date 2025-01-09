@@ -1,53 +1,62 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strings"
 )
 
 func main() {
-	// Variables representing conditions
-	isSunny := false
-	isFree := false
+	// Create a new scanner for reading input
+	scanner := bufio.NewScanner(os.Stdin)
 
-	// Print the state of conditions
-	fmt.Println("Is it sunny? ", isSunny)
-	fmt.Println("Are you free? ", isFree)
+	// Introduction
+	fmt.Println("Welcome to the GitHub Collaboration Role Selector!")
+	fmt.Println("Choose a role: Owner, Admin, Collaborator, or Viewer.")
+	fmt.Print("Enter your role: ")
 
-	// Logical conditions using AND (&&)
-	if isSunny && isFree {
-		fmt.Println("It's sunny and you're free! Let's go to the park.")
+	// Capture user input
+	scanner.Scan()
+	role := scanner.Text() // Get the input as a string
+
+	// Trim any leading/trailing whitespace and convert input to lowercase
+	role = strings.TrimSpace(role)
+	role = strings.ToLower(role)
+
+	// Switch statement to describe the role's permissions
+	fmt.Println("\nRole Permissions:")
+	switch role {
+	case "owner":
+		fmt.Println("As an Owner, you have full control over the repository, including managing collaborators and settings!")
+		// fallthrough
+	case "admin":
+		fmt.Println("As an Admin, you can manage repository settings, but you don't have full control over billing and settings like an Owner.")
+		// fallthrough
+	case "collaborator":
+		fmt.Println("As a Collaborator, you can push code to the repository and contribute to the project!")
+		// fallthrough
+	case "viewer":
+		fmt.Println("As a Viewer, you can only view the repository. No changes are allowed.")
+	default:
+		fmt.Println("Hmm... that's not a valid role. Perhaps you want to create your own role?")
 	}
 
-	// Logical conditions using OR (||)
-	if isSunny || isFree {
-		fmt.Println("Either it's sunny or you're free (or both). Consider going to the park.")
-	}
-
-	// Logical conditions using NOT (!)
-	if !isSunny {
-		fmt.Println("It's not sunny today.")
-	}
-	if !isFree {
-		fmt.Println("You are not free today.")
-	}
-
-	// Combining NOT with AND
-	if !isSunny && !isFree {
-		fmt.Println("It's neither sunny nor are you free. No park today.")
-	}
-
-	// Combining NOT with OR
-	if !(isSunny || isFree) {
-		fmt.Println("Neither sunny nor free (checked with OR and NOT). No park today.")
-	}
-
-	// Complex condition: Free, but weather is bad
-	if isFree && !isSunny {
-		fmt.Println("You're free, but it's not sunny. Maybe do something indoors.")
-	}
-
-	// Complex condition: Sunny, but you're busy
-	if isSunny && !isFree {
-		fmt.Println("It's sunny, but you're busy. Maybe another time.")
+	// Bonus feature: Fallthrough to see additional details about permissions
+	fmt.Println("\nBonus: What can you do with your role?")
+	switch role {
+	case "owner":
+		fmt.Println("You have access to billing, repository settings, and the ability to remove anyone from the repository!")
+		fallthrough
+	case "admin":
+		fmt.Println("You can invite new collaborators and change repository visibility.")
+		fallthrough
+	case "collaborator":
+		fmt.Println("You can push code and create branches but cannot change repository settings.")
+		fallthrough
+	case "viewer":
+		fmt.Println("You can only view the repository and open issues, but cannot contribute code.")
+	default:
+		fmt.Println("You're an unknown entity, so no permissions have been set for you!")
 	}
 }
