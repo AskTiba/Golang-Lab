@@ -1,46 +1,88 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"strings"
+	"time"
+)
 
-// fibonacci calculates the nth Fibonacci number iteratively.
-// The function starts with the first two numbers in the sequence (0 and 1),
-// and then iteratively calculates the next numbers up to n.
-func fibonacci(n int) int {
-	// Base cases: Return the number itself for n = 0 or n = 1.
-	if n <= 1 {
-		return n
-	}
+// Constants for game choices
+const (
+	rock     = "rock"
+	paper    = "paper"
+	scissors = "scissors"
+)
 
-	// Variables to store the two most recent Fibonacci numbers.
-	a, b := 0, 1
-
-	// Iteratively calculate the Fibonacci numbers up to the nth number.
-	for i := 2; i <= n; i++ {
-		// Update 'a' to the current 'b', and 'b' to the sum of 'a' and 'b'.
-		a, b = b, a+b
-	}
-
-	// Return the nth Fibonacci number.
-	return b
+// GetComputerChoice generates a random choice for the computer.
+func GetComputerChoice() string {
+	choices := []string{rock, paper, scissors}
+	rand.Seed(time.Now().UnixNano())
+	return choices[rand.Intn(len(choices))]
 }
 
-func main() {
-	fmt.Println("Fibonacci sequence:")
-
-	// Print the first 10 Fibonacci numbers (from F(0) to F(9)).
-	for i := 0; i < 10; i++ {
-		// Call the fibonacci function for each index 'i' and print the result.
-		fmt.Printf("F(%d) = %d\n", i, fibonacci(i))
+// DetermineWinner evaluates the winner based on player and computer choices.
+func DetermineWinner(playerChoice, computerChoice string) string {
+	if playerChoice == computerChoice {
+		return "It's a tie!"
 	}
 
-	// for loop used as a while loop
-	m := 0
-	for {
-		println(m+1)
-		m++
+	switch playerChoice {
+	case rock:
+		if computerChoice == scissors {
+			return "You win! Rock beats Scissors."
+		}
+	case paper:
+		if computerChoice == rock {
+			return "You win! Paper beats Rock."
+		}
+	case scissors:
+		if computerChoice == paper {
+			return "You win! Scissors beats Paper."
+		}
+	}
 
-		if m >= 9 {
+	return "You lose! Better luck next time."
+}
+
+// PlayRound handles the logic for a single round of the game.
+func PlayRound(playerChoice string) string {
+	playerChoice = strings.ToLower(strings.TrimSpace(playerChoice))
+	if !isValidChoice(playerChoice) {
+		return "Invalid choice. Please choose 'rock', 'paper', or 'scissors'."
+	}
+
+	computerChoice := GetComputerChoice()
+	fmt.Printf("Player chose: %s\n", playerChoice)
+	fmt.Printf("Computer chose: %s\n", computerChoice)
+
+	return DetermineWinner(playerChoice, computerChoice)
+}
+
+// isValidChoice checks if the player's choice is valid.
+func isValidChoice(choice string) bool {
+	return choice == rock || choice == paper || choice == scissors
+}
+
+// Main function to run the game.
+func main() {
+	fmt.Println("Welcome to Rock, Paper, Scissors!")
+	fmt.Println("Type 'rock', 'paper', or 'scissors' to play. Type 'exit' to quit.")
+
+	for {
+		// Get player's choice
+		var playerChoice string
+		fmt.Print("\nEnter your choice: ")
+		fmt.Scanln(&playerChoice)
+
+		// Exit condition
+		if strings.ToLower(strings.TrimSpace(playerChoice)) == "exit" {
+			fmt.Println("Thanks for playing! Goodbye.")
 			break
 		}
+
+		// Play a round and show the result
+		result := PlayRound(playerChoice)
+		fmt.Println(result)
 	}
 }
