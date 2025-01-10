@@ -1,45 +1,46 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-)
+import "fmt"
+
+// fibonacci calculates the nth Fibonacci number iteratively.
+// The function starts with the first two numbers in the sequence (0 and 1),
+// and then iteratively calculates the next numbers up to n.
+func fibonacci(n int) int {
+	// Base cases: Return the number itself for n = 0 or n = 1.
+	if n <= 1 {
+		return n
+	}
+
+	// Variables to store the two most recent Fibonacci numbers.
+	a, b := 0, 1
+
+	// Iteratively calculate the Fibonacci numbers up to the nth number.
+	for i := 2; i <= n; i++ {
+		// Update 'a' to the current 'b', and 'b' to the sum of 'a' and 'b'.
+		a, b = b, a+b
+	}
+
+	// Return the nth Fibonacci number.
+	return b
+}
 
 func main() {
-	var value float64
-	var fromUnit, toUnit string
+	fmt.Println("Fibonacci sequence:")
 
-	// Input: Value to convert
-	fmt.Println("Enter value to convert: ")
-	fmt.Scanln(&value)
-
-	// Input: From currency
-	fmt.Println("Choose unit currency to convert from (Ush, Ksh, USD): ")
-	fmt.Scanln(&fromUnit)
-	fromUnit = strings.ToUpper(strings.TrimSpace(fromUnit)) // Normalize input
-
-	// Input: To currency
-	fmt.Println("Choose unit currency to convert to (Ush, Ksh, USD): ")
-	fmt.Scanln(&toUnit)
-	toUnit = strings.ToUpper(strings.TrimSpace(toUnit)) // Normalize input
-
-	// Conversion rates between currencies
-	exchangeRates := map[string]map[string]float64{
-		"USH": {"KSH": 0.038, "USD": 0.00027, "USH": 1},
-		"KSH": {"USH": 26.32, "USD": 0.0075, "KSH": 1},
-		"USD": {"USH": 3750, "KSH": 133.33, "USD": 1},
+	// Print the first 10 Fibonacci numbers (from F(0) to F(9)).
+	for i := 0; i < 10; i++ {
+		// Call the fibonacci function for each index 'i' and print the result.
+		fmt.Printf("F(%d) = %d\n", i, fibonacci(i))
 	}
 
-	// Validate the currencies
-	if rates, ok := exchangeRates[fromUnit]; ok {
-		if rate, ok := rates[toUnit]; ok {
-			// Perform conversion
-			convertedValue := value * rate
-			fmt.Printf("%.2f %s is equal to %.2f %s\n", value, fromUnit, convertedValue, toUnit)
-			return
+	// for loop used as a while loop
+	m := 0
+	for {
+		println(m+1)
+		m++
+
+		if m >= 9 {
+			break
 		}
 	}
-
-	// Handle invalid input
-	fmt.Println("Invalid currency conversion. Please choose Ush, Ksh, or USD.")
 }
