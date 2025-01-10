@@ -1,62 +1,45 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"strings"
 )
 
 func main() {
-	// Create a new scanner for reading input
-	scanner := bufio.NewScanner(os.Stdin)
+	var value float64
+	var fromUnit, toUnit string
 
-	// Introduction
-	fmt.Println("Welcome to the GitHub Collaboration Role Selector!")
-	fmt.Println("Choose a role: Owner, Admin, Collaborator, or Viewer.")
-	fmt.Print("Enter your role: ")
+	// Input: Value to convert
+	fmt.Println("Enter value to convert: ")
+	fmt.Scanln(&value)
 
-	// Capture user input
-	scanner.Scan()
-	role := scanner.Text() // Get the input as a string
+	// Input: From currency
+	fmt.Println("Choose unit currency to convert from (Ush, Ksh, USD): ")
+	fmt.Scanln(&fromUnit)
+	fromUnit = strings.ToUpper(strings.TrimSpace(fromUnit)) // Normalize input
 
-	// Trim any leading/trailing whitespace and convert input to lowercase
-	role = strings.TrimSpace(role)
-	role = strings.ToLower(role)
+	// Input: To currency
+	fmt.Println("Choose unit currency to convert to (Ush, Ksh, USD): ")
+	fmt.Scanln(&toUnit)
+	toUnit = strings.ToUpper(strings.TrimSpace(toUnit)) // Normalize input
 
-	// Switch statement to describe the role's permissions
-	fmt.Println("\nRole Permissions:")
-	switch role {
-	case "owner":
-		fmt.Println("As an Owner, you have full control over the repository, including managing collaborators and settings!")
-		// fallthrough
-	case "admin":
-		fmt.Println("As an Admin, you can manage repository settings, but you don't have full control over billing and settings like an Owner.")
-		// fallthrough
-	case "collaborator":
-		fmt.Println("As a Collaborator, you can push code to the repository and contribute to the project!")
-		// fallthrough
-	case "viewer":
-		fmt.Println("As a Viewer, you can only view the repository. No changes are allowed.")
-	default:
-		fmt.Println("Hmm... that's not a valid role. Perhaps you want to create your own role?")
+	// Conversion rates between currencies
+	exchangeRates := map[string]map[string]float64{
+		"USH": {"KSH": 0.038, "USD": 0.00027, "USH": 1},
+		"KSH": {"USH": 26.32, "USD": 0.0075, "KSH": 1},
+		"USD": {"USH": 3750, "KSH": 133.33, "USD": 1},
 	}
 
-	// Bonus feature: Fallthrough to see additional details about permissions
-	fmt.Println("\nBonus: What can you do with your role?")
-	switch role {
-	case "owner":
-		fmt.Println("You have access to billing, repository settings, and the ability to remove anyone from the repository!")
-		fallthrough
-	case "admin":
-		fmt.Println("You can invite new collaborators and change repository visibility.")
-		fallthrough
-	case "collaborator":
-		fmt.Println("You can push code and create branches but cannot change repository settings.")
-		fallthrough
-	case "viewer":
-		fmt.Println("You can only view the repository and open issues, but cannot contribute code.")
-	default:
-		fmt.Println("You're an unknown entity, so no permissions have been set for you!")
+	// Validate the currencies
+	if rates, ok := exchangeRates[fromUnit]; ok {
+		if rate, ok := rates[toUnit]; ok {
+			// Perform conversion
+			convertedValue := value * rate
+			fmt.Printf("%.2f %s is equal to %.2f %s\n", value, fromUnit, convertedValue, toUnit)
+			return
+		}
 	}
+
+	// Handle invalid input
+	fmt.Println("Invalid currency conversion. Please choose Ush, Ksh, or USD.")
 }
