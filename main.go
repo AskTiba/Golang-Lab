@@ -4,60 +4,46 @@ import "fmt"
 
 // Main function to run the game.
 func main() {
-	// carInventory := make(map[string]int)
-	// carInventory["Nissan"] = 6
-	// carInventory["Isuzu"] = 3
-	// carInventory["Subaru"] = 13
-	// carInventory["Jeep"] = 6
-	// carInventory["Benz"] = 6
-
-	carInventory := map[string]int{
-		"Nissan" : 6,
-		"Isuzu" : 3,
-		"Subaru": 13,
-		"Jeep" : 6,
-		"Benz" : 8,
+	colors := [4]string{"Green", "Blue","Orange", "Purple"}
+	fmt.Println(colors)
+	for i, color := range colors{
+		fmt.Printf("index:%v. Item:%v\n", i, color)
+		fmt.Println()
 	}
 
-	fmt.Printf("Car inventory is: %v\n", carInventory)
-	cars := len(carInventory)
-	fmt.Println()
-
-	// lens returns the number of key-vakue pairs
-	fmt.Printf("There are %v types of cars\n",cars)
-	fmt.Println()
-	
-	//  update the map
-	carInventory["Benz"] = 15
-	fmt.Printf("Car inventory is: %v\n", carInventory)
-	fmt.Println()
-	
-	// add to the map
-	carInventory["Ferrari"] = 7
-	carInventory["Ferrari"] = 7
-	fmt.Printf("Car inventory is: %v\n", carInventory)
-	fmt.Println()
-	
-	// Delete item from the map the map
-	delete(carInventory,"Isuzu")
-	fmt.Printf("Car inventory is: %v\n", carInventory)
-	fmt.Println()
-
-	// retrieving a vakue from a map using the ghost key syntax
-	numFerraris, FerrariFound := carInventory["Ferrari"]
-	fmt.Printf("Ferraris found: %t\n", FerrariFound)
-	if FerrariFound{
-		fmt.Printf("We have %v Ferraris\n",numFerraris)
+	// If you only want the item, then you can discard thr index
+	for i := range colors{
+		fmt.Printf("%v\n",i)
+		fmt.Println()
 	}
-	fmt.Println()
 	
-	//  OR
-	
-	// This is a common practice in Go and it is useful  when the variables are only
-	// needed  for the check, they are only scoped here
-	if numFerraris, ok := carInventory["Ferrari"]; ok{fmt.Printf("We have %v Ferraris\n",numFerraris)}
-	fmt.Println()
-	
-	clear(carInventory)
-	fmt.Printf("Car inventory is: %v\n", carInventory)
+	// If you only want the index, then you can discard thr item
+	for _, color := range colors{
+		fmt.Printf("%s\n",color)
+		fmt.Println()
+	}
+
+	gotChars := map[string]string{
+		"Tomund" : "Wildling",
+		"Brienne" : "Tarth",
+		"Sam" : "Tally",
+		"Aegon" : "Targaryan",
+		"Robert" : "Baratheon",
+		"Aary" : "Stark",
+	}
+
+	for name,house := range gotChars{
+		fmt.Printf("%s of house %s\n", name, house)
+		fmt.Println()
+	}
+
+	for _, house := range gotChars{
+		fmt.Printf("%s\n", house)
+	}
+
+	// // Total number gotChars
+	// totalNumberOfGotChars := 0
+	// for _, house := range gotChars{
+
+	// }
 }
